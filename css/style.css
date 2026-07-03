@@ -466,3 +466,19 @@ footer {
     background-color: #002d5a !important;
     color: #ffffff !important;
 }
+
+/* Por defecto (Usuario NO logueado): Oculta el precio real y muestra el candado */
+body:not(.user-logged-in) .seccion-precio-real {
+    display: none !important;
+}
+body:not(.user-logged-in) .seccion-precio-bloqueado {
+    display: flex !important;
+}
+
+/* Cuando el usuario SÍ inicia sesión: Muestra el precio real y oculta el candado */
+body.user-logged-in .seccion-precio-real {
+    display: flex !important;
+}
+body.user-logged-in .seccion-precio-bloqueado {
+    display: none !important;
+}

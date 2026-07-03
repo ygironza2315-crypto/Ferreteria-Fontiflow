@@ -107,16 +107,29 @@ function renderizarProductos(lista, debeHacerScroll = true) {
                             </div>
                             
                             <div class="d-flex justify-content-between align-items-center border-top pt-3">
-                                <div>
-                                    <small class="text-muted d-block">Precio unitario</small>
-                                    <h3 class="fw-bold mb-0 precio-display" style="color: #ff6600; font-size: 1.4rem;">$0</h3>
+                                
+                                <div class="seccion-precio-real justify-content-between align-items-center w-100">
+                                    <div>
+                                        <small class="text-muted d-block">Precio unitario</small>
+                                        <h3 class="fw-bold mb-0 precio-display" style="color: #ff6600; font-size: 1.4rem;">$0</h3>
+                                    </div>
+                                    <div class="d-flex gap-1">
+                                        <a href="#" target="_blank" class="btn btn-sm btn-success fw-bold px-2 btn-cotizar" style="font-size: 0.75rem;">💬 Cotizar</a>
+                                        <button type="button" class="btn btn-sm btn-warning fw-bold px-2 shadow-sm btn-anadir" style="font-size: 0.75rem;" 
+                                                onclick="agregarAlCarrito(this)">🛒 Añadir</button>
+                                    </div>
                                 </div>
-                                <div class="d-flex gap-1">
-                                    <a href="#" target="_blank" class="btn btn-sm btn-success fw-bold px-2 btn-cotizar" style="font-size: 0.75rem;">💬 Cotizar</a>
-                                    
-                                    <button type="button" class="btn btn-sm btn-warning fw-bold px-2 shadow-sm btn-anadir" style="font-size: 0.75rem;" 
-                                            onclick="agregarAlCarrito(this)">🛒 Añadir</button>
+
+                                <div class="seccion-precio-bloqueado justify-content-between align-items-center w-100">
+                                    <div>
+                                        <small class="text-muted d-block">Precio unitario</small>
+                                        <h3 class="fw-bold mb-0 text-secondary" style="font-size: 1.1rem; padding-top: 4px;">🔒 Privado</h3>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-sm btn-primary fw-bold px-3 shadow-sm btn-abrir-auth" style="font-size: 0.75rem;">🔑 Ver Precio</button>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -897,5 +910,6 @@ window.cerrarVentanaTransferencia = function() {
     document.getElementById('alerta-transferencia-fontiflow')?.remove();
     document.getElementById('fondo-alerta-transferencia')?.remove();
 };
+
 });
 

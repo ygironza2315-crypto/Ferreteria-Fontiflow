@@ -1,36 +1,76 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+    <script type="module" src="js/auth.js"></script>
+
+    <style>
+        body:not(.user-logged-in) .seccion-precio-real {
+            display: none !important;
+        }
+
+        body:not(.user-logged-in) .seccion-precio-bloqueado {
+            display: flex !important;
+        }
+
+        body.user-logged-in .seccion-precio-real {
+            display: flex !important;
+        }
+
+        body.user-logged-in .seccion-precio-bloqueado {
+            display: none !important;
+        }
+    </style>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo | Ferretería Fontiflow</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
     <a href="https://wa.me/573171318781" class="btn-whatsapp" target="_blank" title="Chatea con nosotros">
-    <i class="fab fa-whatsapp"></i>
-</a>
+        <i class="fab fa-whatsapp"></i>
+    </a>
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
-    <img src="img/logo-fontiflow.png" alt="Logo" style="height: 45px; width: auto;" class="me-2">
-    <span style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; color: #f8f9fa; font-size: 1.6rem; border-bottom: 2px solid var(--naranja-fonti);">
-        Fontiflow
-    </span>
-</a>
+                <img src="img/logo-fontiflow.png" alt="Logo" style="height: 45px; width: auto;" class="me-2">
+                <span
+                    style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; color: #f8f9fa; font-size: 1.6rem; border-bottom: 2px solid var(--naranja-fonti);">
+                    Fontiflow
+                </span>
+            </a>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto text-uppercase small">
+
+                <div class="d-flex align-items-center text-uppercase small me-auto">
+
+                    <div class="seccion-precio-real align-items-center gap-3">
+                        <span style="color: #ff6600; font-size: 0.85rem; font-weight: bold;">
+                            Hola, <strong id="txtNombreUsuario" style="text-transform: uppercase;">...</strong>
+                        </span>
+                        <button type="button" id="btnCerrarSesion"
+                            class="nav-link btn btn-link p-0 text-uppercase fw-normal m-0"
+                            style="color: #a0b2c6; font-size: 0.95rem; text-decoration: none; letter-spacing: 0.5px;">
+                            Cerrar Sesión
+                        </button>
+                    </div>
+                </div>
+                <ul class="navbar-nav ms-auto text-uppercase small align-items-center">
                     <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="nosotros.html">Nosotros</a></li>
-                    <li class="nav-item"><a class="nav-link text-warning fw-bold" href="productos.html">Catálogo</a></li>
+                    <li class="nav-item"><a class="nav-link text-warning fw-bold" href="productos.html">Catálogo</a>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
                 </ul>
+
             </div>
-        </div>
     </nav>
 
     <header class="hero-section text-center py-5">
@@ -40,98 +80,102 @@
         </div>
     </header>
 
-<section id="seccion-categorias" class="py-5 bg-light">
-    <div class="container text-center">
-        <h2 class="display-6 fw-bold mb-2" style="font-family: 'Playfair Display', serif; color: var(--azul-fonti);">Nuestras Líneas</h2>
-        <p class="text-muted mb-5">Elige una categoría para ver los productos disponibles.</p>
-        <div class="row g-3 justify-content-center">
-            <div class="col-6 col-md-4 col-lg-3">
-                <button class="btn btn-categoria-card active" data-filter="todos">Todos los Productos</button>
-            </div>
-            <div class="col-6 col-md-4 col-lg-3">
-                <button class="btn btn-categoria-card" data-filter="sanitario">Sanitario</button>
-            </div>
-            <div class="col-6 col-md-4 col-lg-3">
-                <button class="btn btn-categoria-card" data-filter="presion">Presion</button>
-            </div>
-            <div class="col-6 col-md-4 col-lg-3">
-                <button class="btn btn-categoria-card" data-filter="conduit">Conduit</button>
-            </div>
-            <div class="col-6 col-md-4 col-lg-3">
-                <button class="btn btn-categoria-card" data-filter="griferia">Griferia</button>
-            </div>
-            <div class="col-6 col-md-4 col-lg-3">
-                <button class="btn btn-categoria-card" data-filter="herramientas">Herramientas</button>
-            </div>
-            <div class="col-6 col-md-4 col-lg-3">
-                <button class="btn btn-categoria-card" data-filter="electricos">Electricos</button>
-            </div>
-            <div class="col-6 col-md-4 col-lg-3">
-                <button class="btn btn-categoria-card" data-filter="accesorios">Accesorios</button>
-            </div>
-            <div class="col-6 col-md-4 col-lg-3">
-                <button class="btn btn-categoria-card" data-filter="cerraduras">Cerraduras</button>
-            </div>
-            <div class="col-6 col-md-4 col-lg-3">
-                <button class="btn btn-categoria-card" data-filter="pinturas">Pinturas</button>
-            </div>
-            <div class="col-6 col-md-4 col-lg-3">
-                <button class="btn btn-categoria-card" data-filter="pegantes">Pegantes</button>
-            </div>
-            <div class="col-6 col-md-4 col-lg-3">
-                <button class="btn btn-categoria-card" data-filter="construccion">Construccion</button>
-            </div>
-            <div class="col-6 col-md-4 col-lg-3">
-                <button class="btn btn-categoria-card" data-filter="discos">Discos</button>
+    <section id="seccion-categorias" class="py-5 bg-light">
+        <div class="container text-center">
+            <h2 class="display-6 fw-bold mb-2"
+                style="font-family: 'Playfair Display', serif; color: var(--azul-fonti);">Nuestras Líneas</h2>
+            <p class="text-muted mb-5">Elige una categoría para ver los productos disponibles.</p>
+            <div class="row g-3 justify-content-center">
+                <div class="col-6 col-md-4 col-lg-3">
+                    <button class="btn btn-categoria-card active" data-filter="todos">Todos los Productos</button>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <button class="btn btn-categoria-card" data-filter="sanitario">Sanitario</button>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <button class="btn btn-categoria-card" data-filter="presion">Presion</button>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <button class="btn btn-categoria-card" data-filter="conduit">Conduit</button>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <button class="btn btn-categoria-card" data-filter="griferia">Griferia</button>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <button class="btn btn-categoria-card" data-filter="herramientas">Herramientas</button>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <button class="btn btn-categoria-card" data-filter="electricos">Electricos</button>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <button class="btn btn-categoria-card" data-filter="accesorios">Accesorios</button>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <button class="btn btn-categoria-card" data-filter="cerraduras">Cerraduras</button>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <button class="btn btn-categoria-card" data-filter="pinturas">Pinturas</button>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <button class="btn btn-categoria-card" data-filter="pegantes">Pegantes</button>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <button class="btn btn-categoria-card" data-filter="construccion">Construccion</button>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <button class="btn btn-categoria-card" data-filter="discos">Discos</button>
+                </div>
             </div>
         </div>
-    </div>
-</section>
-<div class="separador-buscador"></div>
+    </section>
+    <div class="separador-buscador"></div>
 
-<div class="container">
-    <div class="row justify-content-center mb-5">
-        <div class="col-md-8">
-            <div class="input-group buscador-personalizado shadow-sm">
-                <span class="input-group-text bg-white border-0">
-                    <i class="fas fa-search text-muted"></i>
-                </span>
-                <input type="text" id="buscador-blog" class="form-control border-0 ps-0" placeholder="¿Qué buscas hoy?">
-            </div>
-        </div>
-    </div>
-</div>
-        <!-- Los productos aparecerán aquí abajo inmediatamente -->
-        <div class="row g-4" id="contenedor-productos">
-            <!-- Se llena dinámicamente -->
-        </div>
-    </div>
-</section>
-<section class="py-5">
     <div class="container">
-        <div class="row g-4" id="contenedor-productos">
-            </div>
-    </div>    
-</section>
-<section class="py-5 bg-light border-top">
-    <div class="container text-center">
-        <h5 class="text-uppercase text-muted mb-4" style="letter-spacing: 2px; font-size: 0.8rem;">Marcas que nos respaldan</h5>
-        <div class="row align-items-center justify-content-center opacity-75">
-            <div class="col-6 col-md-2 mb-4">
-                <img src="img/marca-tuboplex.png" alt="Tuboplex" class="img-fluid grayscale" style="max-height: 40px;">
-            </div>
-            <div class="col-6 col-md-2 mb-4">
-                <img src="img/marca-tubosa.png" alt="Tubosa" class="img-fluid grayscale" style="max-height: 40px;">
-            </div>
-            <div class="col-6 col-md-2 mb-4">
-                <img src="img/marca-dewalt.png" alt="DeWalt" class="img-fluid grayscale" style="max-height: 40px;">
-            </div>
-            <div class="col-6 col-md-2 mb-4">
-                <img src="img/marca-truper.png" alt="Truper" class="img-fluid grayscale" style="max-height: 40px;">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-8">
+                <div class="input-group buscador-personalizado shadow-sm">
+                    <span class="input-group-text bg-white border-0">
+                        <i class="fas fa-search text-muted"></i>
+                    </span>
+                    <input type="text" id="buscador-blog" class="form-control border-0 ps-0"
+                        placeholder="¿Qué buscas hoy?">
+                </div>
             </div>
         </div>
     </div>
-</section>
+    <!-- Los productos aparecerán aquí abajo inmediatamente -->
+    <div class="row g-4" id="contenedor-productos">
+        <!-- Se llena dinámicamente -->
+    </div>
+    </div>
+    </section>
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4" id="contenedor-productos">
+            </div>
+        </div>
+    </section>
+    <section class="py-5 bg-light border-top">
+        <div class="container text-center">
+            <h5 class="text-uppercase text-muted mb-4" style="letter-spacing: 2px; font-size: 0.8rem;">Marcas que nos
+                respaldan</h5>
+            <div class="row align-items-center justify-content-center opacity-75">
+                <div class="col-6 col-md-2 mb-4">
+                    <img src="img/marca-tuboplex.png" alt="Tuboplex" class="img-fluid grayscale"
+                        style="max-height: 40px;">
+                </div>
+                <div class="col-6 col-md-2 mb-4">
+                    <img src="img/marca-tubosa.png" alt="Tubosa" class="img-fluid grayscale" style="max-height: 40px;">
+                </div>
+                <div class="col-6 col-md-2 mb-4">
+                    <img src="img/marca-dewalt.png" alt="DeWalt" class="img-fluid grayscale" style="max-height: 40px;">
+                </div>
+                <div class="col-6 col-md-2 mb-4">
+                    <img src="img/marca-truper.png" alt="Truper" class="img-fluid grayscale" style="max-height: 40px;">
+                </div>
+            </div>
+        </div>
+    </section>
     <footer class="py-4 text-center text-white" style="background-color: #002d5a; border-top: 4px solid #ff6600;">
         <div class="container">
             <h4 class="fw-bold mb-1">FERRETERÍA FONTIFLOW</h4>
@@ -142,5 +186,82 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/script.js"></script>
+    <div id="authModalCustom"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1050; align-items: center; justify-content: center;">
+        <div class="bg-white p-4 rounded-3 shadow-lg position-relative"
+            style="width: 100%; max-width: 400px; margin: 15px;">
+
+            <button type="button" class="btn-close position-absolute" style="top: 15px; right: 15px;"
+                onclick="cerrarModalAuth()"></button>
+
+            <div class="text-center mb-4">
+                <h3 class="fw-bold" style="color: #002d5a;">Ferretería Fontiflow</h3>
+                <p class="text-muted small">Catálogo Digital & Pasarela de Pagos</p>
+            </div>
+
+            <div class="modal-body p-0">
+                <div id="modalSeccionLogin">
+                    <p class="text-muted small mb-3">Inicia sesión para ver precios y comprar.</p>
+                    <form id="modalLoginForm">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted mb-1">Correo Electrónico</label>
+                            <input type="email" id="modalEmail" class="form-control form-control-sm" required
+                                placeholder="correo@ejemplo.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted mb-1">Contraseña</label>
+                            <input type="password" id="modalPassword" class="form-control form-control-sm" required
+                                placeholder="••••••••">
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-primary w-100 py-2 fw-bold"
+                            style="background-color: #002d5a; border: none;">Entrar</button>
+                    </form>
+                    <p class="text-center small mt-3 mb-0">
+                        ¿No tienes cuenta? <span id="btnModalIrARegistro" class="text-primary fw-bold"
+                            style="cursor: pointer; text-decoration: underline;">Regístrate aquí</span>
+                    </p>
+                </div>
+
+                <div id="modalSeccionRegistro" class="d-none">
+                    <p class="text-muted small mb-3">Crea tu cuenta de cliente en segundos.</p>
+                    <form id="modalRegisterForm">
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted mb-1">Nombre Completo / Empresa</label>
+                            <input type="text" id="modalRegName" class="form-control form-control-sm" required
+                                placeholder="Ej: Juan Pérez / Constructora Fonti">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted mb-1">Correo Electrónico</label>
+                            <input type="email" id="modalRegEmail" class="form-control form-control-sm" required
+                                placeholder="tu-correo@ejemplo.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted mb-1">Contraseña (Mínimo 6
+                                caracteres)</label>
+                            <input type="password" id="modalRegPassword" class="form-control form-control-sm" required
+                                placeholder="••••••••">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-muted mb-1">Confirmar Contraseña</label>
+                            <input type="password" id="modalRegPasswordConfirm" class="form-control form-control-sm"
+                                required placeholder="••••••••">
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-warning w-100 py-2 fw-bold text-white shadow-sm"
+                            style="background-color: #ff6600; border: none;">Crear Cuenta</button>
+                    </form>
+                    <p class="text-center small mt-3 mb-0">
+                        ¿Ya tienes cuenta? <span id="btnModalIrALogin" class="text-primary fw-bold"
+                            style="cursor: pointer; text-decoration: underline;">Inicia sesión aquí</span>
+                    </p>
+                </div>
+
+                <div id="modalErrorMessage" class="alert alert-danger small mt-3 d-none text-center p-2" role="alert">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
