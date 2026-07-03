@@ -1,0 +1,468 @@
+/* =========================================
+   VARIABLES DE MARCA - FERRETERÍA FONTIFLOW
+   ========================================= */
+:root {
+    --azul-fonti: #002d5a;
+    --naranja-fonti: #ff6600;
+    --gris-fondo: #f4f7f6;
+    --blanco: #ffffff;
+    --azul-claro-img: #e0e9f4;
+}
+
+/* =========================================
+   ESTILOS GENERALES
+   ========================================= */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--gris-fondo);
+    color: #333;
+    scroll-behavior: smooth;
+}
+
+/* Navegación */
+.navbar {
+    background-color: var(--azul-fonti) !important;
+    border-bottom: 4px solid var(--naranja-fonti);
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--naranja-fonti) !important;
+    transition: 0.3s;
+}
+
+.nav-link.btn-fonti {
+    background-color: var(--naranja-fonti);
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.nav-link.btn-fonti:hover {
+    background-color: #e65c00;
+}
+
+/* =========================================
+   BANNER PRINCIPAL (HERO)
+   ========================================= */
+.hero-section {
+    background: linear-gradient(rgba(0, 45, 90, 0.8), rgba(0, 45, 90, 0.8)), 
+                url('../img/logo-fontiflow.png') no-repeat center center;
+    background-attachment: fixed;
+    background-size: 40%;
+    color: var(--blanco);
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        background-attachment: scroll;
+        background-size: contain;
+        height: 40vh;
+    }
+}
+
+/* =========================================
+   CATÁLOGO DINÁMICO (TARJETAS)
+   ========================================= */
+
+/* Estructura de la tarjeta horizontal */
+.card-producto-horizontal {
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+    background-color: var(--blanco) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-producto-horizontal:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+/* El cuadro azul claro donde vive la imagen */
+.contenedor-img-horizontal {
+    background-color: var(--azul-claro-img) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: 220px;
+}
+
+.contenedor-img-horizontal img {
+    max-height: 180px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Botones de medidas (Pastillas) */
+.btn-medida {
+    border-radius: 4px;
+    padding: 5px 15px;
+    transition: all 0.2s ease;
+    border: 1px solid #dee2e6;
+    background-color: #f8f9fa;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.btn-medida:hover {
+    border-color: var(--azul-fonti);
+}
+
+.btn-medida.active {
+    background-color: var(--azul-fonti) !important;
+    color: white !important;
+    border-color: var(--azul-fonti);
+}
+
+/* Botón de acción (WhatsApp) */
+.btn-fonti-cotizar {
+    background-color: var(--naranja-fonti) !important;
+    color: white !important;
+    font-weight: bold;
+    border-radius: 5px;
+    text-transform: uppercase;
+    border: none;
+    transition: transform 0.2s;
+}
+
+.btn-fonti-cotizar:hover {
+    background-color: #e65c00 !important;
+    transform: scale(1.05);
+}
+
+/* =========================================
+   BUSCADOR Y FILTROS
+   ========================================= */
+#buscador {
+    height: 50px;
+    border-radius: 0 8px 8px 0;
+    border: 1px solid #dee2e6;
+}
+
+.input-group-text {
+    border-radius: 8px 0 0 8px;
+    background-color: white;
+    border: 1px solid #dee2e6;
+}
+
+.btn-categoria {
+    border-radius: 50px;
+    padding: 6px 20px;
+    font-weight: 600;
+    border-width: 2px;
+}
+
+/* =========================================
+   FORMULARIO Y FOOTER
+   ========================================= */
+.form-control, .form-select {
+    border: 2px solid #e9ecef;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.form-control:focus {
+    border-color: var(--naranja-fonti);
+    box-shadow: none;
+}
+
+.btn-whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25d366;
+    color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+    text-decoration: none;
+}
+
+.grayscale {
+    filter: grayscale(100%);
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+.grayscale:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+footer {
+    background-color: var(--azul-fonti);
+    border-top: 4px solid var(--naranja-fonti);
+}
+
+/* AJUSTES PARA 2 PRODUCTOS POR LÍNEA */
+#contenedor-productos {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card-producto-horizontal {
+    height: 100%; /* Obliga a todas las tarjetas a medir lo mismo de alto */
+    display: flex;
+    flex-direction: column;
+}
+
+.card-producto-horizontal .row {
+    flex-grow: 1; /* Hace que el contenido interno se expanda uniformemente */
+}
+
+/* Para que en móviles la imagen no quede gigante y el texto pequeño */
+@media (max-width: 768px) {
+    .contenedor-img-horizontal {
+        min-height: 150px;
+        padding: 10px;
+    }
+}
+
+/* ESTILOS SECCIÓN NOSOTROS */
+.card-nosotros {
+    background-color: #f8f9fa;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    border-top: 5px solid var(--azul-fonti);
+}
+
+.card-nosotros:hover {
+    transform: translateY(-10px);
+    background-color: var(--blanco);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+    border-top-color: var(--naranja-fonti);
+}
+
+.card-nosotros i {
+    transition: transform 0.3s ease;
+}
+
+.card-nosotros:hover i {
+    transform: scale(1.1);
+}
+
+/* ANIMACIÓN DE ENTRADA SUAVE */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animar-entrada {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.hover-linea {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.hover-linea:hover {
+    background-color: var(--azul-fonti);
+    color: white !important;
+}
+
+.hover-linea:hover i {
+    color: var(--naranja-fonti) !important;
+    transform: scale(1.2);
+}
+
+.text-warning {
+    color: #ffc107 !important; /* Dorado para las estrellas */
+}
+
+#testimonios .card {
+    transition: transform 0.3s ease;
+    border-radius: 15px;
+}
+
+#testimonios .card:hover {
+    transform: scale(1.03);
+}
+
+/* Efecto de brillo para el nombre en el navbar */
+.navbar-brand span {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.navbar-brand:hover span {
+    color: var(--naranja-fonti) !important;
+    text-shadow: 0px 0px 10px rgba(255, 102, 0, 0.5);
+    transform: scale(1.02);
+}
+
+/* Botones de categoría tipo "Caja" */
+.btn-categoria-card {
+    width: 100%;
+    height: 90px;
+    background-color: #ffffff;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: var(--azul-fonti);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+/* Efecto al pasar el mouse */
+.btn-categoria-card:hover {
+    border-color: var(--naranja-fonti);
+    color: var(--naranja-fonti);
+    transform: translateY(-5px);
+    background-color: #fff9f5;
+}
+
+/* ESTADO ACTIVO: La caja completa cambia */
+.btn-categoria-card.active {
+    background-color: var(--azul-fonti) !important;
+    color: #ffffff !important;
+    border-color: var(--azul-fonti) !important;
+    box-shadow: 0 10px 20px rgba(0, 45, 90, 0.2);
+    transform: scale(1.05);
+}
+/* Efectos para las tarjetas del Blog */
+.card-blog {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.card-blog:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+}
+
+/* Zoom suave en la imagen al pasar el mouse */
+.transition-img {
+    transition: transform 0.5s ease;
+}
+
+.card-blog:hover .transition-img {
+    transform: scale(1.1);
+}
+
+.text-orange {
+    color: var(--naranja-fonti);
+}
+
+.filter-blog.active {
+    background-color: var(--azul-fonti);
+    color: white;
+    border-color: var(--azul-fonti);
+}
+/* Unificar el borde naranja del buscador */
+.buscador-personalizado {
+    border: 2px solid #ff6600; /* El naranja de tu marca */
+    border-radius: 10px;
+    overflow: hidden; /* Esto hace que el borde sea continuo */
+}
+
+.buscador-personalizado .input-group-text, 
+.buscador-personalizado .form-control {
+    border: none !important; /* Quitamos los bordes internos de Bootstrap */
+    box-shadow: none !important; /* Quitamos el resplandor azul al hacer clic */
+}
+
+/* Espaciador dedicado para bajar el buscador */
+.separador-buscador {
+    height: 80px; /* Ajusta este valor para bajarlo más o menos */
+    width: 100%;
+    display: block;
+}
+
+.buscador-personalizado {
+    border: 2px solid #ff6600 !important;
+    border-radius: 50px;
+    background: white;
+    padding: 8px 20px;
+}
+
+/* ==========================================================================
+   ESTILO MINIMALISTA: FONDO BLANCO DE ESTUDIO CON INTERACCIÓN DINÁMICA
+   ========================================================================== */
+
+/* 1. Contenedor de la foto: Blanco puro y limpio */
+.fondo-producto-azul {
+    background-color: #ffffff !important; 
+    border-top-left-radius: 15px;    
+    border-bottom-left-radius: 15px; 
+    min-height: 160px; /* Altura perfecta y uniforme para las tarjetas */
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px !important; /* Espacio de colchón para que el producto no toque los bordes */
+    border-right: 1px solid #f0f4f8; /* Línea sutil divisoria antes de los textos */
+}
+
+/* Configuración de la imagen adaptada a escala variable */
+.fondo-producto-azul img {
+    mix-blend-mode: normal !important;
+    background-color: transparent !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 135px !important; 
+    max-width: 135px !important;  
+    object-fit: contain !important; 
+    
+    /* Leemos la variable de JavaScript; si no existe por defecto usa 1 */
+    transform: scale(var(--escala-medida, 1)) !important; 
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+/* 1. Aseguramos el cursor de lupa en el contenedor blanco */
+.fondo-producto-azul {
+    cursor: zoom-in !important;
+    overflow: hidden !important; /* Crucial para que la foto no se salga de la tarjeta */
+}
+
+/* 2. EFECTO LUPA: Súper zoom dinámico al pasar el mouse */
+.item-producto:hover .fondo-producto-azul img {
+    /* Multiplica el tamaño actual de la medida por 1.8 para un zoom profundo */
+    transform: scale(calc(var(--escala-medida, 1) * 1.8)) !important; 
+    
+    /* Quitamos el drop-shadow en el hover para evitar que se dibuje una sombra en el borde cuadrado del PNG */
+    filter: none !important; 
+}
+
+/* 3. Suavizado para que la lupa se mueva de forma fluida */
+.fondo-producto-azul img {
+    transition: transform 0.2s ease-out, transform-origin 0.1s ease-out !important;
+}
+
+/* Botones de variantes de marca personalizados */
+.btn-marca-variante {
+    border-color: #002d5a !important;
+    color: #002d5a !important;
+    border-radius: 4px !important;
+}
+
+.btn-marca-variante:hover, 
+.btn-marca-variante.active {
+    background-color: #002d5a !important;
+    color: #ffffff !important;
+}

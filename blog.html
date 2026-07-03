@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Ferretería Fontiflow</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <a href="https://wa.me/573171318781" class="btn-whatsapp" target="_blank" title="Chatea con nosotros">
+    <i class="fab fa-whatsapp"></i>
+</a>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+    <img src="img/logo-fontiflow.png" alt="Logo" style="height: 45px; width: auto;" class="me-2">
+    <span style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; color: #f8f9fa; font-size: 1.6rem; border-bottom: 2px solid var(--naranja-fonti);">
+        Fontiflow
+    </span>
+</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto text-uppercase small">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="nosotros.html">Nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="productos.html">Catálogo</a></li>
+                    <li class="nav-item"><a class="nav-link text-warning fw-bold" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <header class="hero-section text-center py-5">
+        <div class="container">
+            <h1 class="display-3 fw-bold">Blog del Constructor</h1>
+            <p class="lead text-white">Consejos y novedades para tus proyectos.</p>
+        </div>
+    </header>
+
+    <section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5 fw-bold" style="font-family: 'Playfair Display', serif;">Blog Fontiflow</h2>
+        
+        <div class="d-flex justify-content-center gap-3 mb-5 flex-wrap">
+            <button class="btn btn-outline-dark filter-blog active" data-tag="todos">Todos</button>
+            <button class="btn btn-outline-dark filter-blog" data-tag="plomeria">Plomería</button>
+            <button class="btn btn-outline-dark filter-blog" data-tag="herramientas">Herramientas</button>
+            <button class="btn btn-outline-dark filter-blog" data-tag="presion">Presión</button>
+        </div>
+
+        <div class="row g-4" id="contenedor-blog">
+    
+    <div class="col-md-4 item-blog presion">
+        <div class="card h-100 card-blog border-0 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalBlog"
+             data-titulo="Presión de agua: RDE vs Tubería de Cédula"
+             data-fecha="28 de Abril, 2026" data-badge="Presión" data-imagen="img/blog-presion.jpg"
+             data-contenido="A la hora de elegir tubería para motobombas o presión alta, el RDE es clave. <br><br> 1. El RDE indica la relación entre el diámetro y el espesor. A menor número RDE (como RDE 9), mayor presión soporta. <br> 2. Para instalaciones domésticas estándar en Candelaria, el RDE 21 es el más común. <br> 3. Siempre usa accesorios de la misma marca para evitar fugas térmicas.">
+            <div class="position-relative overflow-hidden">
+                <img src="img/blog-presion.png" class="card-img-top transition-img" alt="Presión">
+                <span class="badge bg-primary position-absolute top-0 start-0 m-3">Presión</span>
+            </div>
+            <div class="card-body">
+                <small class="text-muted">28 de Abril, 2026</small>
+                <h5 class="fw-bold mt-2">Presión de agua: ¿Qué RDE elegir?</h5>
+                <p class="text-muted small">No todas las tuberías aguantan la misma fuerza. Aprende a diferenciarlas...</p>
+                <span class="text-orange fw-bold">Ver más <i class="fas fa-arrow-right ms-1"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 item-blog herramientas">
+        <div class="card h-100 card-blog border-0 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalBlog"
+             data-titulo="Truper vs DeWalt: ¿Cuál comprar?"
+             data-fecha="28 de Abril, 2026" data-badge="Herramientas" data-imagen="img/blog-herramientas.jpg"
+             data-contenido="<b>Truper:</b> Ideal para mantenimiento en casa y fincas. <br><br> <b>DeWalt:</b> Opción para el profesional que usa la herramienta 8 horas al día. Sus motores brushless duran hasta un 50% más. En Fontiflow te asesoramos según tu presupuesto.">
+            <div class="position-relative overflow-hidden">
+                <img src="img/blog-herramientas.jpg" class="card-img-top transition-img" alt="Herramientas">
+                <span class="badge bg-danger position-absolute top-0 start-0 m-3">Herramientas</span>
+            </div>
+            <div class="card-body">
+                <small class="text-muted">28 de Abril, 2026</small>
+                <h5 class="fw-bold mt-2">Truper vs DeWalt: ¿Cuál elegir?</h5>
+                <p class="text-muted small">Te ayudamos a decidir según el uso que le vayas a dar en tu trabajo...</p>
+                <span class="text-orange fw-bold">Ver más <i class="fas fa-arrow-right ms-1"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 item-blog griferia">
+        <div class="card h-100 card-blog border-0 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalBlog"
+             data-titulo="Cómo cuidar el acabado de tu grifería"
+             data-fecha="28 de Abril, 2026" data-badge="Acabados" data-imagen="img/blog-griferia.jpg"
+             data-contenido="1. <b>Prohibido el ácido:</b> Nunca uses ácido muriático cerca de griferías finas. <br> 2. <b>Limpieza ideal:</b> Usa agua, jabón suave y microfibra. <br> 3. <b>Sarro:</b> Usa vinagre blanco diluido por 5 minutos y enjuaga.">
+            <div class="position-relative overflow-hidden">
+                <img src="img/blog-griferia.jpg" class="card-img-top transition-img" alt="Acabados">
+                <span class="badge bg-success position-absolute top-0 start-0 m-3">Acabados</span>
+            </div>
+            <div class="card-body">
+                <small class="text-muted">28 de Abril, 2026</small>
+                <h5 class="fw-bold mt-2">Mantén tu grifería como nueva</h5>
+                <p class="text-muted small">Evita errores comunes que arruinan el brillo de tus baños y cocinas...</p>
+                <span class="text-orange fw-bold">Ver más <i class="fas fa-arrow-right ms-1"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 item-blog plomeria">
+        <div class="card h-100 card-blog border-0 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalBlog"
+             data-titulo="Mantenimiento de Tanques de Agua"
+             data-fecha="10 de Mayo, 2026" data-badge="Hogar" data-imagen="img/blog-tanque.jpg"
+             data-contenido="Es recomendable lavarlo cada 6 meses usando cepillos de cerdas duras. <br><br> Evita químicos corrosivos que puedan degradar el material del tanque. En Fontiflow Candelaria contamos con tanques de alta resistencia con protección UV.">
+            <div class="position-relative overflow-hidden">
+                <img src="img/blog-tanque.jpg" class="card-img-top transition-img" alt="Tanques">
+                <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-3">Hogar</span>
+            </div>
+            <div class="card-body">
+                <small class="text-muted">10 de Mayo, 2026</small>
+                <h5 class="fw-bold mt-2">Mantenimiento de Tanques de Agua</h5>
+                <p class="text-muted small">¿Sabes cada cuánto debes limpiar tu tanque? Aquí te lo contamos...</p>
+                <span class="text-orange fw-bold">Ver más <i class="fas fa-arrow-right ms-1"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 item-blog plomeria">
+        <div class="card h-100 card-blog border-0 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalBlog"
+             data-titulo="Cómo evitar fugas en tuberías de PVC"
+             data-fecha="28 de Abril, 2026" data-badge="Plomería" data-imagen="img/blog-tuberia.jpg"
+             data-contenido="El secreto es la limpieza profunda. <br><br> 1. Usa limpiador removedor. <br> 2. Aplica soldadura líquida Gerfor en ambas partes. <br> 3. Une y gira un cuarto de vuelta para asegurar el sello.">
+            <div class="position-relative overflow-hidden">
+                <img src="img/blog-tuberia.jpg" class="card-img-top transition-img" alt="Fugas PVC">
+                <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-3">Plomería</span>
+            </div>
+            <div class="card-body">
+                <small class="text-muted">28 de Abril, 2026</small>
+                <h5 class="fw-bold mt-2">Cómo evitar fugas en tuberías de PVC</h5>
+                <p class="text-muted small">Aprende a usar correctamente el limpiador y la soldadura líquida...</p>
+                <span class="text-orange fw-bold">Ver más <i class="fas fa-arrow-right ms-1"></i></span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/script.js"></script>
+    <section class="py-5 bg-light border-top">
+    <div class="container text-center">
+        <h5 class="text-uppercase text-muted mb-4" style="letter-spacing: 2px; font-size: 0.8rem;">Marcas que nos respaldan</h5>
+        <div class="row align-items-center justify-content-center opacity-75">
+            <div class="col-6 col-md-2 mb-4">
+                <img src="img/marca-tuboplex.png" alt="Tuboplex" class="img-fluid grayscale" style="max-height: 40px;">
+            </div>
+            <div class="col-6 col-md-2 mb-4">
+                <img src="img/marca-tubosa.png" alt="Tubosa" class="img-fluid grayscale" style="max-height: 40px;">
+            </div>
+            <div class="col-6 col-md-2 mb-4">
+                <img src="img/marca-dewalt.png" alt="DeWalt" class="img-fluid grayscale" style="max-height: 40px;">
+            </div>
+            <div class="col-6 col-md-2 mb-4">
+                <img src="img/marca-truper.png" alt="Truper" class="img-fluid grayscale" style="max-height: 40px;">
+            </div>
+        </div>
+    </div>
+</section>
+    <footer class="py-4 text-center text-white" style="background-color: #002d5a; border-top: 4px solid #ff6600;">
+        <div class="container">
+            <h4 class="fw-bold mb-1">FERRETERÍA FONTIFLOW</h4>
+            <p class="mb-0">Calidad que fluye, soluciones que quedan.</p>
+            <p class="small mb-0">&copy; 2026 Todos los derechos reservados.</p>
+        </div>
+        <div class="modal fade" id="modalBlog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header border-0 pb-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4 pt-0">
+                <div class="text-center mb-4">
+                    <span id="blog-badge" class="badge bg-warning text-dark text-uppercase mb-2"></span>
+                    <h2 id="blog-titulo" class="fw-bold" style="font-family: 'Playfair Display', serif; color: var(--azul-fonti);"></h2>
+                    <small id="blog-fecha" class="text-muted"></small>
+                </div>
+                <img id="blog-imagen" src="" class="img-fluid rounded mb-4 shadow-sm w-100" style="max-height: 400px; object-fit: cover;">
+                <div id="blog-contenido" class="lh-lg" style="font-family: 'Montserrat', sans-serif; color: #444;">
+                    </div>
+            </div>
+            <div class="modal-footer border-0 justify-content-center pb-4">
+                <a href="https://wa.me/573171318781" target="_blank" class="btn btn-warning fw-bold px-4">
+                    ¿Necesitas asesoría? Consúltanos aquí
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+    </footer>
+    </body>
+</html>

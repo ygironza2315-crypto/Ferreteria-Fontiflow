@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto | Ferretería Fontiflow</title>
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Botón Flotante WhatsApp -->
+    <a href="https://wa.me/573171318781" class="btn-whatsapp" target="_blank" title="Chatea con nosotros">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="img/logo-fontiflow.png" alt="Logo" style="height: 45px; width: auto;" class="me-2">
+                <span style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; color: #f8f9fa; font-size: 1.6rem; border-bottom: 2px solid #ff6600;">
+                    Fontiflow
+                </span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto text-uppercase small">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="nosotros.html">Nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="productos.html">Catálogo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link text-warning fw-bold" href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section text-center py-5" style="background-color: #002d5a; color: white;">
+        <div class="container">
+            <h1 class="display-3 fw-bold">Contáctanos</h1>
+            <p class="lead">Cotiza tu obra y recibe en Ciudad del Valle.</p>
+        </div>
+    </header>
+
+    <!-- Sección Cotización -->
+    <section id="cotizar" class="py-5 bg-white border-top">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow-lg border-0 rounded-4">
+                        <div class="card-body p-5">
+                            <h2 class="text-center fw-bold mb-4" style="color: #002d5a;">Cotiza tu Obra en Fontiflow</h2>
+                            <p class="text-center text-muted mb-5">Envíanos tu lista de materiales y un asesor técnico te responderá en breve.</p>
+                            
+                            <form id="form-cotizacion">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Nombre o Empresa</label>
+                                        <input type="text" id="nombre" class="form-control" placeholder="Ej: Constructora Fonti" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">WhatsApp de Contacto</label>
+                                        <input type="tel" id="whatsapp" class="form-control" placeholder="Ej: 3001234567" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label fw-bold">Tipo de Proyecto</label>
+                                        <select id="proyecto" class="form-select">
+                                            <option value="Hogar">Reparación en Hogar</option>
+                                            <option value="Obra Nueva">Obra Nueva / Construcción</option>
+                                            <option value="Industrial">Mantenimiento Industrial</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label fw-bold">Lista de Materiales</label>
+                                        <textarea id="lista" class="form-control" rows="5" placeholder="Ej: 10 tubos PVC 1/2, 5 codos 90 CxC..." required></textarea>
+                                    </div>
+                                    <div class="col-md-12 text-center mt-4">
+                                        <button type="submit" class="btn btn-lg w-100 shadow-sm text-white fw-bold" style="background-color: #ff6600;">
+                                            Enviar Cotización por WhatsApp
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Datos Directos y Mapa -->
+    <section id="datos-negocio" class="py-5 bg-light border-top">
+        <div class="container">
+            <div class="row g-4 align-items-stretch">
+                <!-- Información -->
+                <div class="col-md-5">
+                    <div class="p-4 rounded-4 shadow-sm h-100 bg-white" style="border-left: 5px solid #ff6600;">
+                        <h3 class="fw-bold mb-4" style="color: #002d5a;">Información de Contacto</h3>
+                        
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; background-color: #002d5a; flex-shrink: 0;">
+                                <i class="fas fa-phone-alt text-white"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-0">WhatsApp</h6>
+                                <p class="text-muted mb-0">+57 317 131 8781</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; background-color: #002d5a; flex-shrink: 0;">
+                                <i class="fas fa-envelope text-white"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-0">Correo Electrónico</h6>
+                                <p class="text-muted mb-0">contacto@fontiflow.com</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; background-color: #002d5a; flex-shrink: 0;">
+                                <i class="fas fa-map-marker-alt text-white"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-0">Ubicación</h6>
+                                <p class="text-muted mb-0">Ciudad del Valle Sector 11 Manzanares</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; background-color: #002d5a; flex-shrink: 0;">
+                                <i class="fas fa-clock text-white"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-0">Atención</h6>
+                                <p class="text-muted mb-0">Lunes a Sábado: 8:00 AM - 6:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mapa -->
+                <div class="col-md-7">
+                    <div class="card border-0 shadow-sm h-100 overflow-hidden rounded-4">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127251.78652391696!2d-74.1950291438965!3d4.661919500000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9be408f6a9bb%3A0x6b245a498a5879e6!2sBogot%C3%A1!5e0!3m2!1ses!2sco!4v1714500000000!5m2!1ses!2sco" 
+                            width="100%" height="100%" style="border:0; min-height: 350px;" allowfullscreen="" loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4 text-center text-white" style="background-color: #002d5a; border-top: 4px solid #ff6600;">
+        <div class="container">
+            <h4 class="fw-bold mb-1">FERRETERÍA FONTIFLOW</h4>
+            <p class="mb-0 small">Calidad que fluye, soluciones que quedan.</p>
+            <p class="small mb-0">&copy; 2026 Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script> src="js/script.js"</script>
+</body>
+</html>
