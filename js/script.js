@@ -792,7 +792,7 @@ function ejecutarPasarelaTransaccional(total, nombre, telefono, direccion) {
                 currency: 'COP',
                 amountInCents: montoEnCentavos,
                 reference: referenciaFactura,
-                publicKey: 'pub_test_TSWAQxw2VnANnmCMuyikEQ3mPcLwbulY', // Tu llave pub_test_...
+                publicKey: 'pub_prod_iOswYsKdmhiVZAzFOVa2pZMBHXFYebMj', // Tu llave pub_test_...
                 
                 // === DATOS DEL CLIENTE CORREGIDOS PARA REQUISITOS BANCARIOS ===
                 customerData: {
