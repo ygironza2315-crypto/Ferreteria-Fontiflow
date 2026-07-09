@@ -777,45 +777,46 @@ window.procesarOrdenFinal = function(event) {
 };
 
 // ==========================================================================
-// MOTOR TRANSACCIONAL AUTOSUFICIENTE (CON FIRMA DE INTEGRIDAD AUTOMÁTICA)
+// MOTOR TRANSACCIONAL AUTOSUFICIENTE (CON VALIDACIÓN DE MONTO MÍNIMO)
 // ==========================================================================
 function ejecutarPasarelaTransaccional(total, nombre, telefono, direccion) {
+    
+    // 🚀 1. CANDADO DE SEGURIDAD COMERCIAL (Colocar al principio de todo)
+    if (total < 1500) {
+        alert("Para pagos online con Tarjeta o PSE, el monto mínimo de compra debe ser de $1.500 pesos.\n\nPara montos menores, por favor selecciona el método de pago 'Contra Entrega' o paga en efectivo al recibir tu pedido en Ciudad del Valle.");
+        return; // 🛑 Detiene la ejecución aquí mismo. No cierra el modal ni abre Wompi.
+    }
+
+    // 2. Si el total es de $1.500 o más, el código continúa su curso normal hacia abajo:
     const montoEnCentavos = Math.round(total * 100);
     const referenciaFactura = `FF-${Date.now()}`; 
 
     const btnCerrarModal = document.querySelector('#modalCarrito .btn-close');
     if (btnCerrarModal) btnCerrarModal.click();
 
-    // 🚀 Convertimos esta función en ASYNC para poder encriptar en vivo
     const abrirCheckoutWompi = async () => {
         try {
-            // 🔑 CONFIGURA TUS LLAVES AQUÍ
-            const llavePublica = 'pub_prod_iOswYsKdmhiVZAzFOVa2pZMBHXFYebMj'; // Tu llave pública real
-            const secretoIntegridad = 'prod_integrity_AIjDiDLgxcB2qoXB2GSoTzvHYLz3LYee'; // El secreto de integridad de tu panel
+            const llavePublica = 'pub_prod_iOswYsKdmhiVZAzFOVa2pZMBHXFYebMj'; 
+            const secretoIntegridad = 'prod_integrity_AIjDiDLgxcB2qoXB2GSoTzvHYLz3LYee'; 
 
-            // ==========================================================================
-            // 🛡️ MOTOR DE ENCRIPTACIÓN NATIVO (Genera la Firma SHA-256 obligatoria)
-            // ==========================================================================
+            // Cifrado digital SHA-256
             const cadenaParaCifrar = referenciaFactura + montoEnCentavos + 'COP' + secretoIntegridad;
             const encoder = new TextEncoder();
             const data = encoder.encode(cadenaParaCifrar);
             const hashBuffer = await crypto.subtle.digest('SHA-256', data);
             const hashArray = Array.from(new Uint8Array(hashBuffer));
             const firmaHexadecimal = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-            // ==========================================================================
 
             const checkout = new WidgetCheckout({
                 currency: 'COP',
                 amountInCents: montoEnCentavos,
                 reference: referenciaFactura,
                 publicKey: llavePublica,
-                signature: firmaHexadecimal, // 🔐 Le inyectamos la firma digital calculada
-                
-                // === DATOS DEL CLIENTE CORREGIDOS PARA REQUISITOS BANCARIOS ===
+                signature: firmaHexadecimal, 
                 customerData: {
                     fullName: nombre,
                     phoneNumber: telefono,
-                    phoneNumberPrefix: '+57' // 🇨🇴 Prefijo obligatorio para Colombia
+                    phoneNumberPrefix: '+57' 
                 }
             });
 
@@ -861,7 +862,6 @@ function ejecutarPasarelaTransaccional(total, nombre, telefono, direccion) {
         scriptInyectado.type = 'text/javascript';
         
         scriptInyectado.onload = () => {
-            console.log("Librería descargada con éxito. Abriendo pasarela...");
             abrirCheckoutWompi();
         };
 
