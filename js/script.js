@@ -777,30 +777,35 @@ window.procesarOrdenFinal = function(event) {
 };
 
 // ==========================================================================
-// MOTOR TRANSACCIONAL AUTOSUFICIENTE (CON VALIDACIÓN DE MONTO MÍNIMO)
+// MOTOR TRANSACCIONAL CON LISTADO DE PRODUCTOS Y RESPALDO DE WHATSAPP
 // ==========================================================================
 function ejecutarPasarelaTransaccional(total, nombre, telefono, direccion) {
     
-    // 🚀 1. CANDADO DE SEGURIDAD COMERCIAL (Colocar al principio de todo)
-    if (total < 1500) {
-        alert("Para pagos online con Tarjeta o PSE, el monto mínimo de compra debe ser de $1.500 pesos.\n\nPara montos menores, por favor selecciona el método de pago 'Contra Entrega' o paga en efectivo al recibir tu pedido en Ciudad del Valle.");
-        return; // 🛑 Detiene la ejecución aquí mismo. No cierra el modal ni abre Wompi.
+    let totalLimpio = total;
+    if (typeof total === 'string') {
+        totalLimpio = total.replace(/[^0-9.]/g, ''); 
+    }
+    
+    const montoEnCentavos = Math.round(parseFloat(totalLimpio) * 100);
+    
+    if (montoEnCentavos < 150000) { 
+        alert("Para pagos online con Tarjeta o PSE, el monto mínimo de compra debe ser de $1.500 pesos.");
+        return; 
     }
 
-    // 2. Si el total es de $1.500 o más, el código continúa su curso normal hacia abajo:
-    const montoEnCentavos = Math.round(total * 100);
     const referenciaFactura = `FF-${Date.now()}`; 
-
     const btnCerrarModal = document.querySelector('#modalCarrito .btn-close');
     if (btnCerrarModal) btnCerrarModal.click();
 
     const abrirCheckoutWompi = async () => {
         try {
-            const llavePublica = 'pub_prod_iOswYsKdmhiVZAzFOVa2pZMBHXFYebMj'; 
-            const secretoIntegridad = 'prod_integrity_AIjDiDLgxcB2qoXB2GSoTzvHYLz3LYee'; 
+            const llavePublica = 'pub_prod_iOswYsKdmhiVZAzFOVa2pZMBHXFYebMj'.trim(); 
+            const secretoIntegridad = 'prod_integrity_AIjDiDLgxcB2qoXB2GSoTzvHYLz3LYee'.trim(); 
 
-            // Cifrado digital SHA-256
-            const cadenaParaCifrar = referenciaFactura + montoEnCentavos + 'COP' + secretoIntegridad;
+            const moneda = 'COP';
+            const cadenaParaCifrar = referenciaFactura + montoEnCentavos + moneda + secretoIntegridad;
+
+            // Motor de Cifrado Nativo SHA-256
             const encoder = new TextEncoder();
             const data = encoder.encode(cadenaParaCifrar);
             const hashBuffer = await crypto.subtle.digest('SHA-256', data);
@@ -808,11 +813,13 @@ function ejecutarPasarelaTransaccional(total, nombre, telefono, direccion) {
             const firmaHexadecimal = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
             const checkout = new WidgetCheckout({
-                currency: 'COP',
+                currency: moneda,
                 amountInCents: montoEnCentavos,
                 reference: referenciaFactura,
                 publicKey: llavePublica,
-                signature: firmaHexadecimal, 
+                signature: {
+                    integrity: firmaHexadecimal
+                },
                 customerData: {
                     fullName: nombre,
                     phoneNumber: telefono,
@@ -824,6 +831,21 @@ function ejecutarPasarelaTransaccional(total, nombre, telefono, direccion) {
                 const transaccion = resultado.transaction;
                 
                 if (transaccion.status === 'APPROVED') {
+                    
+                    // ==========================================================================
+                    // 📦 1. CONSTRUCCIÓN DE LA LISTA DE MATERIALES DESDE EL CARRITO
+                    // ==========================================================================
+                    let listaProductosTexto = "";
+                    if (window.carrito && window.carrito.length > 0) {
+                        window.carrito.forEach(item => {
+                            // Mapea el nombre, la cantidad y calcula el subtotal por artículo
+                            listaProductosTexto += `   • ${item.nombre} (x${item.cantidad}) - $${item.precio * item.cantidad}\n`;
+                        });
+                    } else {
+                        listaProductosTexto += `   • Detalle general en factura de pasarela.\n`;
+                    }
+                    // ==========================================================================
+
                     alert(`¡Excelente! Pago aprobado con éxito.\nID Transacción: ${transaccion.id}`);
 
                     let msgExito = `✅ *PAGO CONFIRMADO ONLINE - FONTIFLOW*\n`;
@@ -831,47 +853,62 @@ function ejecutarPasarelaTransaccional(total, nombre, telefono, direccion) {
                     msgExito += `👤 *Comprador:* ${nombre}\n`;
                     msgExito += `📞 *Teléfono:* ${telefono}\n`;
                     msgExito += `📍 *Dirección de Despacho:* ${direccion}\n\n`;
+                    msgExito += `📦 *MATERIALES SOLICITADOS:*\n${listaProductosTexto}\n`; // 👈 ¡Inyectamos la lista aquí!
                     msgExito += `💰 *Monto Recaudado:* $${total}\n`;
                     msgExito += `🆔 *ID Transacción:* ${transaccion.id}\n`;
                     msgExito += `🧾 *Referencia:* ${referenciaFactura}\n\n`;
                     msgExito += `Por favor procedan con el alistamiento de los materiales.`;
 
-                    window.open(`https://wa.me/${MI_TELEFONO}?text=${encodeURIComponent(msgExito)}`, '_blank');
+                    const urlWhatsapp = `https://wa.me/${MI_TELEFONO}?text=${encodeURIComponent(msgExito)}`;
+                    
+                    // Intentamos abrir la pestaña de WhatsApp de forma automática
+                    const ventanaWhatsApp = window.open(urlWhatsapp, '_blank');
 
+                    // ==========================================================================
+                    // 🛡️ 2. RESPALDO SI EL NAVEGADOR BLOQUEA LA VENTANA EMERGENTE
+                    // ==========================================================================
+                    if (!ventanaWhatsApp || ventanaWhatsApp.closed || typeof ventanaWhatsApp.closed == 'undefined') {
+                        // Si el navegador bloqueó el popup, le pintamos un botón gigante en la página para no perder el pedido
+                        const contenedorAlerta = document.getElementById('modalErrorMessage');
+                        if (contenedorAlerta) {
+                            contenedorAlerta.innerHTML = `
+                                <div class="alert alert-success text-center shadow-sm my-3 border-0" style="border-radius: 10px;">
+                                    <p class="fw-bold mb-2 text-success">¡Pago Exitoso en Wompi!</p>
+                                    <p class="small text-muted mb-3">Para finalizar el despacho en Ciudad del Valle, por favor presiona el botón de abajo para enviarnos tu lista de materiales:</p>
+                                    <a href="${urlWhatsapp}" target="_blank" class="btn btn-sm btn-success fw-bold px-4 py-2 shadow-sm w-100">
+                                        📲 Enviar Pedido a WhatsApp
+                                    </a>
+                                </div>`;
+                            contenedorAlerta.classList.remove('d-none');
+                        }
+                    }
+                    // ==========================================================================
+
+                    // Vaciamos el carrito temporal ya que la venta es efectiva
                     window.carrito = [];
                     if (typeof actualizarContadoresUX === "function") actualizarContadoresUX();
 
                 } else if (transaccion.status === 'DECLINED') {
-                    alert('La transacción fue declinada por el banco. Intenta con otro medio de pago o usa la opción Contra Entrega.');
+                    alert('La transacción fue declinada por el banco. Intenta con otro medio de pago.');
                 }
             });
 
         } catch (error) {
-            console.error("Error al inicializar el objeto Wompi o generar firma:", error);
-            alert("Ocurrió un problema de configuración en las credenciales de la pasarela. Revisa la consola (F12).");
+            console.error("Error crítico en el Widget:", error);
         }
     };
 
     if (typeof WidgetCheckout !== 'undefined') {
         abrirCheckoutWompi();
     } else {
-        console.log("Inyectando script de Wompi en caliente desde JavaScript...");
-        
         const scriptInyectado = document.createElement('script');
         scriptInyectado.src = 'https://checkout.wompi.co/widget.js';
         scriptInyectado.type = 'text/javascript';
-        
-        scriptInyectado.onload = () => {
-            abrirCheckoutWompi();
-        };
-
-        scriptInyectado.onerror = () => {
-            alert("Error de conexión: No se pudo descargar el sistema de pagos seguros de Wompi.");
-        };
-
+        scriptInyectado.onload = () => abrirCheckoutWompi();
         document.head.appendChild(scriptInyectado);
     }
 }
+
 // ==========================================================================
 // VENTANA FLOTANTE EXCLUSIVA: DATOS DE TRANSFERENCIA DIRECTA (NEQUI/DAVIPLATA)
 // ==========================================================================
