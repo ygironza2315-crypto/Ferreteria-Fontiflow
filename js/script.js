@@ -777,7 +777,7 @@ window.procesarOrdenFinal = function(event) {
 };
 
 // ==========================================================================
-// MOTOR TRANSACCIONAL AUTOSUFICIENTE (CON PREFIJO TELEFÓNICO CORREGIDO)
+// MOTOR TRANSACCIONAL AUTOSUFICIENTE (CON FIRMA DE INTEGRIDAD AUTOMÁTICA)
 // ==========================================================================
 function ejecutarPasarelaTransaccional(total, nombre, telefono, direccion) {
     const montoEnCentavos = Math.round(total * 100);
@@ -786,21 +786,37 @@ function ejecutarPasarelaTransaccional(total, nombre, telefono, direccion) {
     const btnCerrarModal = document.querySelector('#modalCarrito .btn-close');
     if (btnCerrarModal) btnCerrarModal.click();
 
-    const abrirCheckoutWompi = () => {
+    // 🚀 Convertimos esta función en ASYNC para poder encriptar en vivo
+    const abrirCheckoutWompi = async () => {
         try {
+            // 🔑 CONFIGURA TUS LLAVES AQUÍ
+            const llavePublica = 'pub_prod_iOswYsKdmhiVZAzFOVa2pZMBHXFYebMj'; // Tu llave pública real
+            const secretoIntegridad = 'prod_integrity_AIjDiDLgxcB2qoXB2GSoTzvHYLz3LYee'; // El secreto de integridad de tu panel
+
+            // ==========================================================================
+            // 🛡️ MOTOR DE ENCRIPTACIÓN NATIVO (Genera la Firma SHA-256 obligatoria)
+            // ==========================================================================
+            const cadenaParaCifrar = referenciaFactura + montoEnCentavos + 'COP' + secretoIntegridad;
+            const encoder = new TextEncoder();
+            const data = encoder.encode(cadenaParaCifrar);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const firmaHexadecimal = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            // ==========================================================================
+
             const checkout = new WidgetCheckout({
                 currency: 'COP',
                 amountInCents: montoEnCentavos,
                 reference: referenciaFactura,
-                publicKey: 'pub_prod_iOswYsKdmhiVZAzFOVa2pZMBHXFYebMj', // Tu llave pub_test_...
+                publicKey: llavePublica,
+                signature: firmaHexadecimal, // 🔐 Le inyectamos la firma digital calculada
                 
                 // === DATOS DEL CLIENTE CORREGIDOS PARA REQUISITOS BANCARIOS ===
                 customerData: {
                     fullName: nombre,
                     phoneNumber: telefono,
-                    phoneNumberPrefix: '+57' // 🇨🇴 CORRECCIÓN: Prefijo obligatorio para Colombia
+                    phoneNumberPrefix: '+57' // 🇨🇴 Prefijo obligatorio para Colombia
                 }
-                // ==============================================================
             });
 
             checkout.open(function ( resultado ) {
@@ -830,7 +846,7 @@ function ejecutarPasarelaTransaccional(total, nombre, telefono, direccion) {
             });
 
         } catch (error) {
-            console.error("Error al inicializar el objeto Wompi:", error);
+            console.error("Error al inicializar el objeto Wompi o generar firma:", error);
             alert("Ocurrió un problema de configuración en las credenciales de la pasarela. Revisa la consola (F12).");
         }
     };
