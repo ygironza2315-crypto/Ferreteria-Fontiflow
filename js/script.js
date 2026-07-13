@@ -548,23 +548,23 @@ function inicializarInterfazCarrito() {
                                     <input type="text" id="chk-direccion" class="form-control form-control-sm" required placeholder="Calle, Carrera, Número, Barrio">
                                 </div>
 
-                                <h6 class="fw-bold mb-3 text-muted border-bottom pb-2 mt-4">💳 Selecciona el Método de Pago</h6>
+                                <h6 class="fw-bold mb-3 text-muted border-bottom pb-2 mt-4">💳 Selecciona la Forma de Pago y Entrega</h6>
                                 
-                                <!-- Opción A: WhatsApp Híbrido -->
+                                <!-- Opción 1: Contra Entrega -->
                                 <div class="form-check p-3 border rounded mb-2 bg-white shadow-sm list-group-item-action" style="cursor:pointer;">
-                                    <input class="form-check-input ms-1" type="radio" name="metodoPago" id="pago-whatsapp" value="whatsapp" checked>
-                                    <label class="form-check-label fw-bold d-block text-dark ms-4" for="pago-whatsapp">
-                                        🚚 Contra Entrega / Transferencia (Manual)
-                                        <small class="text-muted d-block fw-normal font-size-xs">Pagas en efectivo al recibir o transfieres directo a nuestro Nequi/Daviplata.</small>
+                                    <input class="form-check-input ms-1" type="radio" name="metodoPago" id="pago-contraentrega" value="contraentrega" checked>
+                                    <label class="form-check-label fw-bold d-block text-dark ms-4" for="pago-contraentrega">
+                                        🚚 Pago Contra Entrega (Efectivo / Nequi al Recibir)
+                                        <small class="text-muted d-block fw-normal font-size-xs">Pagas en efectivo o le transfieres al domiciliario en el momento exacto en que recibes tus materiales en Ciudad del Valle.</small>
                                     </label>
                                 </div>
 
-                                <!-- Opción B: Pasarela de Pago Seguro -->
+                                <!-- Opción 2: Transferencia Inmediata -->
                                 <div class="form-check p-3 border rounded mb-3 bg-white shadow-sm list-group-item-action" style="cursor:pointer;">
-                                    <input class="form-check-input ms-1" type="radio" name="metodoPago" id="pago-online" value="online">
-                                    <label class="form-check-label fw-bold d-block text-dark ms-4" for="pago-online">
-                                        💳 Pago Online Automático (PSE, Tarjetas, Nequi)
-                                        <small class="text-muted d-block fw-normal font-size-xs">Pagas de forma segura e inmediata a través de nuestra pasarela virtual integrada.</small>
+                                    <input class="form-check-input ms-1" type="radio" name="metodoPago" id="pago-transferencia" value="transferencia">
+                                    <label class="form-check-label fw-bold d-block text-dark ms-4" for="pago-transferencia">
+                                        📱 Transferencia Directa Inmediata (Nequi / Daviplata)
+                                        <small class="text-muted d-block fw-normal font-size-xs">Realizas la transferencia desde tu celular ahora mismo y nos adjuntas el comprobante para cargar tu pedido al camión de reparto.</small>
                                     </label>
                                 </div>
 
@@ -777,15 +777,28 @@ window.procesarOrdenFinal = function(event) {
 };
 
 // ==========================================================================
-// MOTOR TRANSACCIONAL EXCLUSIVO CON VENTANA FLOTANTE (FONTIFLOW V3)
+// MOTOR TRANSACCIONAL DEFINITIVO: PERSONALIZACIÓN DE LLAVES (FONTIFLOW V7)
 // ==========================================================================
 function ejecutarPasarelaTransaccional(total, nombre, telefono, direccion) {
     
-    // 1. Cerrar el modal clásico del carrito para liberar espacio visual
+    // 1. Cerrar el modal clásico del carrito de compras para liberar la UX
     const btnCerrarModal = document.querySelector('#modalCarrito .btn-close');
     if (btnCerrarModal) btnCerrarModal.click();
 
     try {
+        // ==========================================================================
+        // ⚙️ CONFIGURACIÓN DE DATOS Y LLAVES DE RECAUDO (Modifica tus datos aquí)
+        // ==========================================================================
+        const NUMERO_CELULAR = "3164235294";              // 👈 Tu número tradicional para Nequi y Daviplata
+        const LLAVE_NEQUI_BREB = "gironzadesanchez24@gmail.com";  // 👈 Tu correo (actúa como Llave Nequi)
+        const LLAVE_DAVIPLATA_BREB = "1113519380";          // 👈 Tu cédula (actúa como Llave Daviplata)
+        const TITULAR_CUENTA = "Maria Andrea Gironza";
+        // ==========================================================================
+
+        // 🔍 Detectamos qué opción seleccionó el usuario en el formulario del carrito
+        const inputPago = document.querySelector('input[name="metodoPago"]:checked');
+        const metodoElegido = inputPago ? inputPago.value : 'contraentrega';
+
         // 📦 2. CONSTRUCCIÓN EN VIVO DE LA LISTA DE MATERIALES DEL CARRITO
         let listaProductosTexto = "";
         if (window.carrito && window.carrito.length > 0) {
@@ -796,53 +809,83 @@ function ejecutarPasarelaTransaccional(total, nombre, telefono, direccion) {
             listaProductosTexto += `   • Detalle de materiales seleccionados en el catálogo.\n`;
         }
 
-        // 📝 3. ESCRITURA DEL MENSAJE COMERCIAL PARA WHATSAPP
+        // Variables dinámicas de texto para personalizar la ventana flotante según la elección
+        let textoMetodoWhatsApp = "";
+        let textoInstruccionPopup = "";
+        let tituloPopup = "¡Pedido Recibido!";
+
+        if (metodoElegido === 'contraentrega') {
+            textoMetodoWhatsApp = "Contra Entrega (Efectivo / Transferencia al recibir)";
+            tituloPopup = "🚚 ¡Despacho Contra Entrega!";
+            textoInstruccionPopup = `Tu pedido se agendó con éxito. Cuando el domiciliario te entregue los materiales en tu dirección, podrás pagarle en efectivo o realizar una transferencia inmediata de <strong>$${total.toLocaleString('es-CO')}</strong> a nuestras cuentas:`;
+        } else {
+            textoMetodoWhatsApp = "Transferencia Directa Inmediata";
+            tituloPopup = "📱 ¡Pedido en Espera de Pago!";
+            textoInstruccionPopup = `Para proceder con el alistamiento rápido en bodega y despacho de tus materiales, por favor realiza la transferencia de <strong>$${total.toLocaleString('es-CO')}</strong> a cualquiera de nuestras cuentas oficiales:`;
+        }
+
+        // 📝 3. ESCRITURA DEL MENSAJE COMERCIAL PARA TU WHATSAPP
         let msgWhatsApp = `🛒 *NUEVO PEDIDO ONLINE - FONTIFLOW*\n`;
-        msgWhatsApp += `Hola, acabo de generar un pedido desde la página web y quiero coordinar el pago/despacho.\n\n`;
+        msgWhatsApp += `Hola, acabo de generar un pedido desde la página web y quiero coordinar la entrega.\n\n`;
         msgWhatsApp += `👤 *Cliente:* ${nombre}\n`;
         msgWhatsApp += `📞 *Teléfono:* ${telefono}\n`;
         msgWhatsApp += `📍 *Dirección de Entrega:* ${direccion}\n\n`;
         msgWhatsApp += `📦 *MATERIALES SOLICITADOS:*\n${listaProductosTexto}\n`;
-        msgWhatsApp += `💰 *TOTAL A PAGAR:* $${total.toLocaleString('es-CO')}\n\n`;
-        msgWhatsApp += `💳 *Método de pago:* Transferencia Directa\n`;
-        msgWhatsApp += `_(En un momento le adjunto el comprobante de pago por aquí)_`;
+        msgWhatsApp += `💰 *TOTAL A CONTROLAR:* $${total.toLocaleString('es-CO')}\n\n`;
+        msgWhatsApp += `💳 *Método de pago:* ${textoMetodoWhatsApp}\n`;
+        if (metodoElegido === 'transferencia') {
+            msgWhatsApp += `_(En un momento le adjunto el comprobante de la transferencia por aquí)_`;
+        } else {
+            msgWhatsApp += `_(Quedo atento a la confirmación de la hora de entrega en mi casa)_`;
+        }
 
         const urlWhatsapp = `https://wa.me/${MI_TELEFONO}?text=${encodeURIComponent(msgWhatsApp)}`;
 
-        // 🚀 4. DISPARO AUTOMÁTICO DE WHATSAPP
+        // 🚀 4. DISPARO AUTOMÁTICO DEL CANAL DE WHATSAPP
         window.open(urlWhatsapp, '_blank');
 
-        // 🏛️ 5. INYECCIÓN DE TU HERMOSA VENTANA FLOTANTE DE RESPALDO
-        // Limpieza de seguridad previa por si acaso quedaba algún rastro
+        // 🏛️ 5. INYECCIÓN DE LA VENTANA FLOTANTE ACTUALIZADA
         document.getElementById('alerta-transferencia-fontiflow')?.remove();
         document.getElementById('fondo-alerta-transferencia')?.remove();
 
         const htmlAlerta = `
             <div id="fondo-alerta-transferencia" class="position-fixed top-0 start-0 w-100 h-100 bg-dark opacity-50" style="z-index: 1999;"></div>
 
-            <div id="alerta-transferencia-fontiflow" class="position-fixed top-50 start-50 translate-middle p-4 rounded shadow-lg bg-white border border-light text-center animate__animated animate__zoomIn" style="z-index: 2000; max-width: 90%; width: 420px; font-family: sans-serif;">
-                <div class="mb-2" style="font-size: 2.5rem;">🎉</div>
-                <h4 class="fw-bold mb-1" style="color: #002d5a;">¡Pedido Recibido!</h4>
-                <p class="text-muted small mb-3">Tu lista ya fue enviada a nuestro WhatsApp. Para proceder con el despacho de tus materiales, transfiere el total de <strong>$${total.toLocaleString('es-CO')}</strong> a nuestras cuentas:</p>
+            <div id="alerta-transferencia-fontiflow" class="position-fixed top-50 start-50 translate-middle p-4 rounded shadow-lg bg-white border border-light text-center animate__animated animate__zoomIn" style="z-index: 2000; max-width: 90%; width: 430px; font-family: sans-serif; max-height: 90vh; overflow-y: auto;">
+                <div class="mb-2" style="font-size: 2.2rem;">🎉</div>
+                <h4 class="fw-bold mb-1" style="color: #002d5a;">${tituloPopup}</h4>
+                <p class="text-muted small mb-3">${textoInstruccionPopup}</p>
                 
-                <div class="p-3 mb-2 rounded border border-light text-start shadow-sm" style="background-color: #fcf4f9; border-left: 5px solid #d10074 !important;">
-                    <span class="fw-bold d-block" style="color: #d10074; font-size: 0.8rem; letter-spacing: 1px;">MOVIMIENTO ELECTRÓNICO</span>
-                    <strong class="fs-5 d-block text-dark mt-1">📱 NEQUI: 3164235294</strong>
-                    <small class="text-muted d-block mt-1">Titular: Ferretería Fontiflow</small>
+                <div class="p-2 mb-2 rounded border border-light text-start shadow-sm" style="background-color: #fcf4f9; border-left: 5px solid #d10074 !important;">
+                    <span class="fw-bold d-block" style="color: #d10074; font-size: 0.7rem; letter-spacing: 0.5px;">BILLETERA DIGITAL</span>
+                    <strong class="fs-6 d-block text-dark mt-0">📱 NEQUI: ${NUMERO_CELULAR}</strong>
+                    <small class="text-muted d-block" style="font-size: 0.75rem;">Titular: ${TITULAR_CUENTA}</small>
                 </div>
 
-                <div class="p-3 mb-3 rounded border border-light text-start shadow-sm" style="background-color: #fff5f5; border-left: 5px solid #e60000 !important;">
-                    <span class="fw-bold d-block" style="color: #e60000; font-size: 0.8rem; letter-spacing: 1px;">DEPÓSITOS EN LÍNEA</span>
-                    <strong class="fs-5 d-block text-dark mt-1">❤️ DAVIPLATA: 3164235294</strong>
-                    <small class="text-muted d-block mt-1">Titular: Ferretería Fontiflow</small>
+                <div class="p-2 mb-2 rounded border border-light text-start shadow-sm" style="background-color: #fff5f5; border-left: 5px solid #e60000 !important;">
+                    <span class="fw-bold d-block" style="color: #e60000; font-size: 0.7rem; letter-spacing: 0.5px;">DEPÓSITOS EN LÍNEA</span>
+                    <strong class="fs-6 d-block text-dark mt-0">❤️ DAVIPLATA: ${NUMERO_CELULAR}</strong>
+                    <small class="text-muted d-block" style="font-size: 0.75rem;">Titular: ${TITULAR_CUENTA}</small>
+                </div>
+
+                <div class="p-2 mb-2 rounded border border-light text-start shadow-sm" style="background-color: #f0fdf4; border-left: 5px solid #16a34a !important;">
+                    <span class="fw-bold d-block" style="color: #16a34a; font-size: 0.7rem; letter-spacing: 0.5px;">LLAVE NEQUI</span>
+                    <strong class="d-block text-dark mt-0" style="font-size: 0.95rem; word-break: break-all;">⚡ ${LLAVE_NEQUI_BREB}</strong>
+                    <small class="text-muted d-block" style="font-size: 0.75rem;">Titular: ${TITULAR_CUENTA}</small>
+                </div>
+
+                <div class="p-2 mb-3 rounded border border-light text-start shadow-sm" style="background-color: #f0fdf4; border-left: 5px solid #16a34a !important;">
+                    <span class="fw-bold d-block" style="color: #16a34a; font-size: 0.7rem; letter-spacing: 0.5px;">LLAVE DAVIPLATA</span>
+                    <strong class="fs-6 d-block text-dark mt-0">⚡ ${LLAVE_DAVIPLATA_BREB}</strong>
+                    <small class="text-muted d-block" style="font-size: 0.75rem;">Titular: ${TITULAR_CUENTA}</small>
                 </div>
 
                 <div class="p-2 bg-light rounded mb-3">
                     <a href="${urlWhatsapp}" target="_blank" class="btn btn-sm btn-success fw-bold w-100 mb-2 py-2 shadow-sm">
-                        📲 Abrir WhatsApp Manualmente
+                        📲 Abrir chat de WhatsApp Manualmente
                     </a>
-                    <p class="text-danger fw-bold m-0" style="font-size: 0.75rem;">
-                        ⚠️ IMPORTANTE: Adjunta el comprobante de pago en el chat para validar tu envío.
+                    <p class="text-danger fw-bold m-0" style="font-size: 0.73rem;">
+                        ⚠️ IMPORTANTE: Recuerda adjuntar tu comprobante de pago en el chat.
                     </p>
                 </div>
 
@@ -854,10 +897,9 @@ function ejecutarPasarelaTransaccional(total, nombre, telefono, direccion) {
             </div>
         `;
 
-        // Añadimos el HTML al final del documento
         document.body.insertAdjacentHTML('beforeend', htmlAlerta);
 
-        // 6. Limpieza total del carrito virtual de compras
+        // 6. Limpieza definitiva del carrito virtual de compras
         window.carrito = [];
         if (typeof actualizarContadoresUX === "function") actualizarContadoresUX();
 
@@ -867,7 +909,7 @@ function ejecutarPasarelaTransaccional(total, nombre, telefono, direccion) {
     }
 }
 
-// 🏛️ FUNCIÓN GLOBAL DE CONTROL: Encargada de remover el popup de la pantalla
+// FUNCIÓN DE CONTROL: Remueve la ventana flotante de la pantalla
 window.cerrarVentanaTransferencia = function() {
     document.getElementById('alerta-transferencia-fontiflow')?.remove();
     document.getElementById('fondo-alerta-transferencia')?.remove();
